@@ -1,69 +1,149 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        printLine();
+        System.out.print("Enter number : ");
         Scanner scanner = new Scanner(System.in);
+        int minutes = scanner.nextInt();
 
-        //Task 1
-        System.out.print("Enter a: ");
-        int firstNumber = scanner.nextInt();
-        System.out.print("Enter b: ");
-        int secondNumber= scanner.nextInt();
-        sum(firstNumber,secondNumber);
-        sub(firstNumber,secondNumber);
-        mult(firstNumber,secondNumber);
-        div(firstNumber,secondNumber);
+        switch (minutes%10) {
+            case 0:
+            case 1:
+            case 2:
+            case 5:
+            case 6:
+            case 7:
+                System.out.println("Green");
+                break;
+            case 3:
+            case 4:
+            case 8:
+            case 9:
+                System.out.println("Red");
+                break;
+        }
+        printLine();
+        System.out.print("Enter number : ");
+        int number = scanner.nextInt();
+        int numberOfDigits = numberOfDigits(number);
+        System.out.println("Number of digits : "+numberOfDigits);
+        System.out.println("Has number greater than 4 : "+hasNumberGreaterFour(number));
+        System.out.print("Reverse number : ");
+        printReverseNumber(number);
 
-        //Task 2
-        System.out.println("--------------------------------");
-        System.out.println("How are you?");
-        String answer = scanner.next();
-        System.out.println("You are " + answer);
+        printLine();
+        int[] array = new int[12];
+        randomArray(array);
+        int max = maxNumber(array);
+        int min = minNumber(array);
+        System.out.println("Max: "+max);
+        System.out.println("Min: "+min);
+        System.out.println("Average of half array : "+average(array));
+        int []arrayB = evenArray(array);
+        System.out.println(Arrays.toString(arrayB));
+        int []arrayC = oddArray(array);
+        System.out.println(Arrays.toString(arrayC));
 
-
-        //Task 3
-        System.out.println("--------------------------------");
-        double a = 20;
-        double b = 30;
-        double c = 18;
-        double d = 22;
-        double e = 26;
-        double sABG = 0.5*(a*b);
-        double g = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
-        double sGCF = 0.5*(g*c);
-        double f = Math.sqrt(Math.pow(g,2)+Math.pow(c,2));
-        double p = (e+f+d)/2;
-        double sEFD = Math.sqrt(p*(p-e)*(p-f)*(p-d));
-        double S = sEFD+sABG+sGCF;
-        System.out.println("S = "+S);
-
-
-        //Task 4
-        System.out.println("--------------------------------");
-        double result = ((double)((2*factorial(5))+(3*factorial(8))))
-                /((double)(factorial(6)+factorial(4)));
-
-        System.out.println("(2*5!+3*8!)/(6!+4!) = " + result);
 
     }
-    public static void sum(int a, int b){
-        System.out.println(a + " + " + b + " = " + (a + b));
+    public static int[] oddArray(int[]arr){
+        int count = 0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]%2==1)count++;
+        }
+        int[] oddArray = new int[count];
+        count = 0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]%2==1){
+                oddArray[count] = arr[i];
+                count++;
+            }
+        }
+        return oddArray;
     }
-    public static void sub(int a, int b){
-        System.out.println(a + " - " + b + " = " + (a - b));
+    public static int[] evenArray(int[]arr){
+        int count = 0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]%2==0)count++;
+        }
+        int[] evenArray = new int[count];
+        count = 0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]%2==0){
+                evenArray[count] = arr[i];
+                count++;
+            }
+        }
+        return evenArray;
     }
-    public static void mult(int a, int b){
-        System.out.println(a + " * " + b + " = " + (a * b));
+
+    public static double average(int[]arr){
+        int len = arr.length/2;
+        int sum = 0;
+        for(int i = (arr.length-1);i>len;i--){
+            sum+=arr[i];
+        }
+        double result = (double) sum/(double)len;
+        return result;
     }
-    public static void div(int a, int b){
-        System.out.println(a + " / " + b + " = " + ((double)a / (double) b));
+    public static int maxNumber(int[] arr){
+        int max = arr[0];
+        for (int i=1;i<arr.length;i++){
+            if(arr[i]>max){
+                max=arr[i];
+            }
+        }
+        return max;
     }
-    public static int factorial(int n){
-        int result = 1;
-        for (int i=1;i<=n;i++){
-            result *= i;
+    public static int minNumber(int[] arr){
+        int min = arr[0];
+        for (int i=1;i<arr.length;i++){
+            if(arr[i]<min){
+                min=arr[i];
+            }
+        }
+        return min;
+    }
+    public static void randomArray(int[] arr){
+        for(int i = 0;i< arr.length;i++){
+            arr[i]=(int)(Math.random()*9);
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+    public static void printLine(){
+        System.out.println("---------------------------------");
+    }
+
+    public static int numberOfDigits(int number){
+        int count = 0;
+        while (number>0){
+            int digit = number%10;
+            number/=10;
+            count++;
+        }
+        return count;
+    }
+    public static boolean hasNumberGreaterFour(int number){
+        boolean result = false;
+        while (number>0){
+            int digit = number%10;
+            number/=10;
+            if (digit>4){
+                result = true;
+            }
         }
         return result;
+    }
+    public static void printReverseNumber(int number){
+        while (number>0){
+            int digit = number%10;
+            number/=10;
+            System.out.print(digit);
+        }
+        System.out.println();
     }
 
 }
