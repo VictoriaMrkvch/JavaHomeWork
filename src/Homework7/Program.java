@@ -23,8 +23,5 @@ public class Program {
             System.out.print(text.substring(m.start(), m.end()));
         }
 
-
-
-
     }
 }
